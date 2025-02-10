@@ -3,6 +3,7 @@ package es.ulpgc.eite.da.basicquiz;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -21,7 +22,7 @@ public class QuestionActivity extends AppCompatActivity {
     private boolean nextButtonEnabled;
     //private boolean trueButtonPressed;
 
-    private String resultText;
+    private String resultText = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -128,19 +129,28 @@ public class QuestionActivity extends AppCompatActivity {
 
         questionField.setText(questionsArray[questionIndex]);
 
-        /*if (!nextButtonEnabled) {
+        if (!nextButtonEnabled) {
             resultText = getString(R.string.empty_text);
         }
 
+
         resultField.setText(resultText);
+
+
+        /*nextButton.setEnabled(true);
+        cheatButton.setEnabled(false);
+        falseButton.setEnabled(false);
+        trueButton.setEnabled(false);*/
+
 
         nextButton.setEnabled(nextButtonEnabled);
         cheatButton.setEnabled(!nextButtonEnabled);
         falseButton.setEnabled(!nextButtonEnabled);
-        trueButton.setEnabled(!nextButtonEnabled);*/
+        trueButton.setEnabled(!nextButtonEnabled);
     }
 
     private void onTrueButtonClicked() {
+
 
         if (answersArray[questionIndex] == 1) {
             resultText =  getString(R.string.correct_text);
@@ -150,6 +160,11 @@ public class QuestionActivity extends AppCompatActivity {
 
         nextButtonEnabled = true;
         updateLayoutContent();
+
+
+
+        Log.d(TAG, "Ejecutando onTrueButtonClicked");
+        Log.d(TAG, "resultText:"  + resultText);
     }
 
     private void onFalseButtonClicked() {
@@ -192,5 +207,21 @@ public class QuestionActivity extends AppCompatActivity {
             questionIndex = 0;
         }
 
+    }
+
+    public void onFalseButton(View view) {
+        Log.d(TAG, "Ejecutando onFalseButton");
+
+        onFalseButtonClicked();
+    }
+
+    public void onTrueButton(View view) {
+        Log.d(TAG, "Ejecutando onTrueButton");
+
+        onTrueButtonClicked();
+    }
+
+    public void onNextButton(View view) {
+        onNextButtonClicked();
     }
 }
