@@ -29,6 +29,8 @@ public class QuestionActivity extends AppCompatActivity {
         setContentView(R.layout.activity_question);
         setTitle(R.string.question_screen_title);
 
+        Log.d(TAG, "Ejecutando onCreate");
+
         //initLayoutData();
         //linkLayoutComponents();
         //updateLayoutContent();
