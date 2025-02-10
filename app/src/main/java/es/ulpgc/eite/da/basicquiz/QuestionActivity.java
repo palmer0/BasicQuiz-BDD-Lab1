@@ -31,9 +31,10 @@ public class QuestionActivity extends AppCompatActivity {
 
         Log.d(TAG, "Ejecutando onCreate");
 
-        //initLayoutData();
-        //linkLayoutComponents();
-        //updateLayoutContent();
+
+        initLayoutData();
+        linkLayoutComponents();
+        updateLayoutContent();
         //initLayoutButtons();
     }
 
@@ -120,9 +121,14 @@ public class QuestionActivity extends AppCompatActivity {
     */
 
     private void updateLayoutContent() {
+
+        Log.d(TAG, "Ejecutando updateLayoutContent");
+        Log.d(TAG, "questionIndex:"  + questionIndex);
+        //Log.d(TAG, "questionsArray:" + questionsArray[questionIndex]);
+
         questionField.setText(questionsArray[questionIndex]);
 
-        if (!nextButtonEnabled) {
+        /*if (!nextButtonEnabled) {
             resultText = getString(R.string.empty_text);
         }
 
@@ -131,7 +137,7 @@ public class QuestionActivity extends AppCompatActivity {
         nextButton.setEnabled(nextButtonEnabled);
         cheatButton.setEnabled(!nextButtonEnabled);
         falseButton.setEnabled(!nextButtonEnabled);
-        trueButton.setEnabled(!nextButtonEnabled);
+        trueButton.setEnabled(!nextButtonEnabled);*/
     }
 
     private void onTrueButtonClicked() {
