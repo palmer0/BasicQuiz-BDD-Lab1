@@ -111,6 +111,9 @@ public class CheatActivity extends AppCompatActivity {
 
     finish();
 
+    //yesButton.setEnabled(false);
+    //noButton.setEnabled(false);
+
     /*
     Intent intent = new Intent(this, QuestionActivity.class);
     startActivity(intent);
