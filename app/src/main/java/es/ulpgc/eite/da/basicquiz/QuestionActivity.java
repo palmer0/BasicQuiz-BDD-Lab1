@@ -3,7 +3,6 @@ package es.ulpgc.eite.da.basicquiz;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -12,6 +11,8 @@ import androidx.appcompat.app.AppCompatActivity;
 public class QuestionActivity extends AppCompatActivity {
 
     public static final String TAG = "Quiz.QuestionActivity";
+
+    public static final int CHEAT_REQUEST = 1;
 
     private Button falseButton, trueButton, cheatButton, nextButton;
     private TextView questionField, resultField;
@@ -22,16 +23,13 @@ public class QuestionActivity extends AppCompatActivity {
     private boolean nextButtonEnabled;
     //private boolean trueButtonPressed;
 
-    private String resultText = "";
+    private String resultText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_question);
         setTitle(R.string.question_screen_title);
-
-        Log.d(TAG, "Ejecutando onCreate");
-
 
         initLayoutData();
         linkLayoutComponents();
@@ -122,26 +120,13 @@ public class QuestionActivity extends AppCompatActivity {
     */
 
     private void updateLayoutContent() {
-
-        Log.d(TAG, "Ejecutando updateLayoutContent");
-        Log.d(TAG, "questionIndex:"  + questionIndex);
-        //Log.d(TAG, "questionsArray:" + questionsArray[questionIndex]);
-
         questionField.setText(questionsArray[questionIndex]);
 
         if (!nextButtonEnabled) {
             resultText = getString(R.string.empty_text);
         }
 
-
         resultField.setText(resultText);
-
-
-        /*nextButton.setEnabled(true);
-        cheatButton.setEnabled(false);
-        falseButton.setEnabled(false);
-        trueButton.setEnabled(false);*/
-
 
         nextButton.setEnabled(nextButtonEnabled);
         cheatButton.setEnabled(!nextButtonEnabled);
@@ -151,7 +136,6 @@ public class QuestionActivity extends AppCompatActivity {
 
     private void onTrueButtonClicked() {
 
-
         if (answersArray[questionIndex] == 1) {
             resultText =  getString(R.string.correct_text);
         } else {
@@ -160,11 +144,6 @@ public class QuestionActivity extends AppCompatActivity {
 
         nextButtonEnabled = true;
         updateLayoutContent();
-
-
-
-        Log.d(TAG, "Ejecutando onTrueButtonClicked");
-        Log.d(TAG, "resultText:"  + resultText);
     }
 
     private void onFalseButtonClicked() {
@@ -182,9 +161,39 @@ public class QuestionActivity extends AppCompatActivity {
     @SuppressWarnings("ALL")
     private void onCheatButtonClicked() {
 
+        /*
+        Intent intent = new Intent(this, CheatActivity.class);
+        intent.putExtra(CheatActivity.EXTRA_ANSWER, answersArray[questionIndex]);
+        startActivity(intent);
+        //startActivityForResult(intent, CHEAT_REQUEST);
 
+        */
     }
 
+    /*
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent intent) {
+        super.onActivityResult(requestCode, resultCode, intent);
+
+        Log.d(TAG, "onActivityResult");
+
+        if (requestCode == CHEAT_REQUEST && resultCode == RESULT_OK && intent != null) {
+
+            boolean answerCheated = intent.getBooleanExtra(
+                CheatActivity.EXTRA_CHEATED, false
+            );
+
+            //Log.d(TAG, "answerCheated: " + answerCheated);
+
+            if (answerCheated) {
+                nextButtonEnabled = true;
+                onNextButtonClicked();
+            }
+
+        }
+
+    }
+    */
 
     private void onNextButtonClicked() {
         Log.d(TAG, "onNextButtonClicked");
@@ -208,22 +217,4 @@ public class QuestionActivity extends AppCompatActivity {
         }
 
     }
-
-    /*
-    public void onFalseButton(View view) {
-        Log.d(TAG, "Ejecutando onFalseButton");
-
-        onFalseButtonClicked();
-    }
-
-    public void onTrueButton(View view) {
-        Log.d(TAG, "Ejecutando onTrueButton");
-
-        onTrueButtonClicked();
-    }
-
-    public void onNextButton(View view) {
-        onNextButtonClicked();
-    }
-    */
 }

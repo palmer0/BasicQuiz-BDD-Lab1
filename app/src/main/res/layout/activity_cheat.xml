@@ -6,20 +6,21 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".QuestionActivity">
+    tools:context=".CheatActivity">
+
 
 
     <TextView
-        android:id="@+id/questionField"
+        android:id="@+id/warningField"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
-        android:text="@string/empty_text"
+        android:text="@string/warning_text"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="Question" />
+        tools:text="Warning" />
 
     <LinearLayout
         android:id="@+id/linearLayout"
@@ -29,13 +30,13 @@
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/questionField">
+        app:layout_constraintTop_toBottomOf="@+id/warningField">
 
         <Button
-            android:id="@+id/trueButton"
+            android:id="@+id/yesButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/true_button_label"
+            android:text="@string/yes_button_label"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
         <Space
@@ -44,15 +45,15 @@
             android:layout_weight="1" />
 
         <Button
-            android:id="@+id/falseButton"
+            android:id="@+id/noButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/false_button_label"
+            android:text="@string/no_button_label"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
     </LinearLayout>
 
     <TextView
-        android:id="@+id/resultField"
+        android:id="@+id/answerField"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
@@ -61,39 +62,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout"
-        tools:text="Result" />
+        tools:text="Answer" />
 
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/resultField">
-
-        <Button
-            android:id="@+id/nextButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/next_button_label"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-            tools:text="Next" />
-
-        <Space
-            android:layout_width="24dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1" />
-
-        <Button
-            android:id="@+id/cheatButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/cheat_button_label"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-            android:visibility="visible"
-            tools:text="Cheat" />
-    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

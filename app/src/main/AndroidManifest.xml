@@ -22,7 +22,11 @@
             </intent-filter>
         </activity>
 
+        <activity
+            android:name=".CheatActivity"
+            android:exported="true">
 
+        </activity>
     </application>
 
 </manifest>

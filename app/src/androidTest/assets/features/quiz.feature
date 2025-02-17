@@ -21,6 +21,7 @@ Feature: Quiz
 #      | Question #1: True  | True   | True   | Correct!   |
 #      | Question #1: True  | False  | True   | Incorrect! |
 
+
   Scenario Outline: responder a pregunta en pantalla Question
 
     Given iniciar pantalla Question
@@ -37,7 +38,6 @@ Feature: Quiz
       | question           | button | answer | result     |
       | Question #1: True  | True   | True   | Correct!   |
       | Question #1: True  | False  | True   | Incorrect! |
-
 
 #  Scenario Outline: pasar a pantalla Cheat sin responder a pregunta en pantalla Question
 #
@@ -61,6 +61,23 @@ Feature: Quiz
 #      | question                                                 |
 #      | Question #1: True |
 
+  Scenario Outline: pasar a pantalla Cheat sin responder a pregunta en pantalla Question
+
+    Given iniciar pantalla Question
+    And mostrar pregunta "<question>"
+    And ocultar resultado
+    And mostrar botones True y False y Cheat activados
+    And mostrar boton Next desactivado
+    When pulsar boton Cheat
+    Then iniciar pantalla Cheat
+    And mostrar mensaje Warning
+    And ocultar respuesta
+    And mostrar botones Yes y No activados
+    And pulsar boton Back
+
+    Examples:
+      | question                                                 |
+      | Question #1: True |
 
 #  Scenario Outline: volver a pantalla Question sin mostrar respuesta en pantalla Cheat
 #
@@ -91,8 +108,32 @@ Feature: Quiz
 #      | question                                                 |
 #      | Question #1: True |
 
+  Scenario Outline: volver a pantalla Question sin mostrar respuesta en pantalla Cheat
 
-#  Scenario Outline: mostrar respuesta en pantalla Cheat
+    Given iniciar pantalla Question
+    And mostrar pregunta "<question>"
+    And ocultar resultado
+    And mostrar botones True y False y Cheat activados
+    And mostrar boton Next desactivado
+    And pulsar boton Cheat
+    And iniciar pantalla Cheat
+    And mostrar mensaje Warning
+    And ocultar respuesta
+    And mostrar botones Yes y No activados
+    When pulsar boton No
+    Then finalizar pantalla Cheat
+    And resumir pantalla Question
+    And mostrar pregunta "<question>"
+    And ocultar resultado
+    And mostrar botones True y False y Cheat activados
+    And mostrar boton Next desactivado
+
+
+    Examples:
+      | question                                                 |
+      | Question #1: True |
+
+  Scenario Outline: mostrar respuesta en pantalla Cheat
 #
 #    Given iniciar pantalla Question
 #    And mostrar pregunta "<question>"
@@ -115,6 +156,26 @@ Feature: Quiz
 #    Examples:
 #      | question          | answer |
 #      | Question #1: True | True   |
+
+
+    Given iniciar pantalla Question
+    And mostrar pregunta "<question>"
+    And ocultar resultado
+    And mostrar botones True y False y Cheat activados
+    And mostrar boton Next desactivado
+    And pulsar boton Cheat
+    And iniciar pantalla Cheat
+    And mostrar mensaje Warning
+    And ocultar respuesta
+    And mostrar botones Yes y No activados
+    When pulsar boton Yes
+    Then mostrar respuesta "<answer>" a pregunta "<question>"
+    And mostrar botones Yes y No desactivados
+    And pulsar boton Back
+
+    Examples:
+      | question          | answer |
+      | Question #1: True | True   |
 
 
 #  Scenario Outline: volver a pantalla Question mostrando respuesta en pantalla Cheat
@@ -150,28 +211,34 @@ Feature: Quiz
 #      | question1         | answer | question2          |
 #      | Question #1: True | True   | Question #2: False |
 
-
-  Scenario Outline: pasar a siguiente pregunta en pantalla Question
+  Scenario Outline: volver a pantalla Question mostrando respuesta en pantalla Cheat
 
     Given iniciar pantalla Question
     And mostrar pregunta "<question1>"
     And ocultar resultado
     And mostrar botones True y False y Cheat activados
     And mostrar boton Next desactivado
-    And pulsar boton "<button>"
-    And mostrar resultado "<result>" a respuesta "<answer>"
-    And mostrar botones True y False y Cheat desactivados
-    And mostrar boton Next activado
-    When pulsar boton Next
-    Then mostrar pregunta "<question2>"
+    And pulsar boton Cheat
+    And iniciar pantalla Cheat
+    And mostrar mensaje Warning
+    And ocultar respuesta
+    And mostrar botones Yes y No activados
+    And pulsar boton Yes
+    And mostrar botones Yes y No desactivados
+    And mostrar respuesta "<answer>" a pregunta "<question1>"
+    When pulsar boton Back
+    Then finalizar pantalla Cheat
+    And resumir pantalla Question
+    And mostrar pregunta "<question2>"
     And ocultar resultado
     And mostrar botones True y False y Cheat activados
     And mostrar boton Next desactivado
 
+
     Examples:
-      | question1         | button  | answer  | result     | question2          |
-      | Question #1: True | True    | True    | Correct!   | Question #2: False |
-      | Question #1: True | False   | True    | Incorrect! | Question #2: False |
+      | question1         | answer | question2          |
+      | Question #1: True | True   | Question #2: False |
+
 
 #  Scenario Outline: pasar a siguiente pregunta en pantalla Question
 #
@@ -204,6 +271,26 @@ Feature: Quiz
 #      | Question #1: True | True    | True    | Correct!   | Question #2: False |
 #      | Question #1: True | False   | True    | Incorrect! | Question #2: False |
 
+  Scenario Outline: pasar a siguiente pregunta en pantalla Question
 
+    Given iniciar pantalla Question
+    And mostrar pregunta "<question1>"
+    And ocultar resultado
+    And mostrar botones True y False y Cheat activados
+    And mostrar boton Next desactivado
+    And pulsar boton "<button>"
+    And mostrar resultado "<result>" a respuesta "<answer>"
+    And mostrar botones True y False y Cheat desactivados
+    And mostrar boton Next activado
+    When pulsar boton Next
+    Then mostrar pregunta "<question2>"
+    And ocultar resultado
+    And mostrar botones True y False y Cheat activados
+    And mostrar boton Next desactivado
+
+    Examples:
+      | question1         | button  | answer  | result     | question2          |
+      | Question #1: True | True    | True    | Correct!   | Question #2: False |
+      | Question #1: True | False   | True    | Incorrect! | Question #2: False |
 
 
