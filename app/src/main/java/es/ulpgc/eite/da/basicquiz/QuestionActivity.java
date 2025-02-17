@@ -1,8 +1,10 @@
 package es.ulpgc.eite.da.basicquiz;
 
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -43,6 +45,27 @@ public class QuestionActivity extends AppCompatActivity {
         falseButton.setOnClickListener(v -> onFalseButtonClicked());
         nextButton.setOnClickListener(v -> onNextButtonClicked());
         cheatButton.setOnClickListener(v -> onCheatButtonClicked());
+
+
+
+        /*
+        trueButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // metodo (o codio) a ejecutar cuando se haga clic en TRUE
+                onTrueButtonClicked();
+            }
+        });
+
+        falseButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // metodo (o codio) a ejecutar cuando se haga clic en FALSE
+                onFalseButtonClicked();
+            }
+        });
+        */
+
     }
 
 
@@ -161,13 +184,20 @@ public class QuestionActivity extends AppCompatActivity {
     @SuppressWarnings("ALL")
     private void onCheatButtonClicked() {
 
-        /*
+
         Intent intent = new Intent(this, CheatActivity.class);
+        // para pasar datos de una pantalla a otra
+        // debo hacerlo usando "clave, valor"
+        // clave: , valor: respuesta a pregunta actual
+        //intent.putExtra(EXTRA_ANSWER, answersArray[questionIndex]);
         intent.putExtra(CheatActivity.EXTRA_ANSWER, answersArray[questionIndex]);
+        //intent.putExtra("INDICE",  questionIndex);
+        //intent.putExtra("RESPUESTA",  answersArray[questionIndex]);
+        //intent.putExtra("PREEGUNTA",  questionsArray[questionIndex]);
         startActivity(intent);
         //startActivityForResult(intent, CHEAT_REQUEST);
 
-        */
+
     }
 
     /*
