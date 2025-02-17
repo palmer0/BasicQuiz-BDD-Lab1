@@ -30,16 +30,19 @@ public class CheatActivity extends AppCompatActivity {
 
     Log.d(TAG, "onCreate");
 
-    //linkLayoutComponents();
-    //initLayoutData();
-    //initLayoutButtons();
+    linkLayoutComponents();
+    initLayoutData();
+    initLayoutButtons();
   }
 
 
   private void initLayoutData() {
     Intent intent = getIntent();
 
+    // hay algun dato pasado desde pantalla Question
     if ( intent != null) {
+
+      // guardar respuesta correcta
       currentAnswer = intent.getExtras().getInt(EXTRA_ANSWER);
     }
   }
@@ -64,6 +67,7 @@ public class CheatActivity extends AppCompatActivity {
     //Log.d(TAG, "answerCheated: " + answerCheated);
 
     Intent intent = new Intent();
+    //Intent intent = new Intent(this, QuestionActivity.class);
     intent.putExtra(EXTRA_CHEATED, answerCheated);
     setResult(RESULT_OK, intent);
 
@@ -82,10 +86,15 @@ public class CheatActivity extends AppCompatActivity {
 
 
   private void onYesButtonClicked() {
+
+    //answerField.setText("" + currentAnswer);
+
+
     yesButton.setEnabled(false);
     noButton.setEnabled(false);
     answerCheated = true;
     updateLayoutContent();
+
   }
 
   private void updateLayoutContent() {
@@ -99,10 +108,21 @@ public class CheatActivity extends AppCompatActivity {
   }
 
   private void onNoButtonClicked() {
+
+    finish();
+
+    /*
+    Intent intent = new Intent(this, QuestionActivity.class);
+    startActivity(intent);
+    */
+
+
+    /*
     yesButton.setEnabled(false);
     noButton.setEnabled(false);
 
     returnCheatedStatus();
+    */
   }
 
 

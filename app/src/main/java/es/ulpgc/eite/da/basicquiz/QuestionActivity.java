@@ -39,6 +39,11 @@ public class QuestionActivity extends AppCompatActivity {
         initLayoutButtons();
     }
 
+    private void initLayoutData() {
+        questionsArray = getResources().getStringArray(R.array.questions_array);
+        answersArray = getResources().getIntArray(R.array.answers_array);
+    }
+
     private void initLayoutButtons() {
 
         trueButton.setOnClickListener(v -> onTrueButtonClicked());
@@ -66,12 +71,6 @@ public class QuestionActivity extends AppCompatActivity {
         });
         */
 
-    }
-
-
-    private void initLayoutData() {
-        questionsArray = getResources().getStringArray(R.array.questions_array);
-        answersArray = getResources().getIntArray(R.array.answers_array);
     }
 
     private void linkLayoutComponents() {
@@ -142,20 +141,7 @@ public class QuestionActivity extends AppCompatActivity {
     }
     */
 
-    private void updateLayoutContent() {
-        questionField.setText(questionsArray[questionIndex]);
 
-        if (!nextButtonEnabled) {
-            resultText = getString(R.string.empty_text);
-        }
-
-        resultField.setText(resultText);
-
-        nextButton.setEnabled(nextButtonEnabled);
-        cheatButton.setEnabled(!nextButtonEnabled);
-        falseButton.setEnabled(!nextButtonEnabled);
-        trueButton.setEnabled(!nextButtonEnabled);
-    }
 
     private void onTrueButtonClicked() {
 
@@ -190,17 +176,24 @@ public class QuestionActivity extends AppCompatActivity {
         // debo hacerlo usando "clave, valor"
         // clave: , valor: respuesta a pregunta actual
         //intent.putExtra(EXTRA_ANSWER, answersArray[questionIndex]);
+
+        // paso 0 o 1 segun la respuesta
+        // pero podria pasar true o false (como booleanos)
+        // o podria pasar "True" o "False" (como strings)
         intent.putExtra(CheatActivity.EXTRA_ANSWER, answersArray[questionIndex]);
+
         //intent.putExtra("INDICE",  questionIndex);
         //intent.putExtra("RESPUESTA",  answersArray[questionIndex]);
         //intent.putExtra("PREEGUNTA",  questionsArray[questionIndex]);
-        startActivity(intent);
-        //startActivityForResult(intent, CHEAT_REQUEST);
+        //startActivity(intent);
+
+        // usado para poder pasar aqui datos desde la actividad arrancada
+        startActivityForResult(intent, CHEAT_REQUEST);
 
 
     }
 
-    /*
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
         super.onActivityResult(requestCode, resultCode, intent);
@@ -215,15 +208,30 @@ public class QuestionActivity extends AppCompatActivity {
 
             //Log.d(TAG, "answerCheated: " + answerCheated);
 
+            // actualizar IU como consecuencia
+            // de haber visto la respuesta correcta
             if (answerCheated) {
-                nextButtonEnabled = true;
+
+                /*
+                nextButtonEnabled = false;
+                questionIndex++;
+
+                checkQuizCompletion();
+
+                if (questionIndex < questionsArray.length) {
+                    //trueButtonPressed = false;
+                    updateLayoutContent();
+                }
+                */
+
+                //nextButtonEnabled = true;
                 onNextButtonClicked();
             }
 
         }
 
     }
-    */
+
 
     private void onNextButtonClicked() {
         Log.d(TAG, "onNextButtonClicked");
@@ -239,6 +247,22 @@ public class QuestionActivity extends AppCompatActivity {
         }
 
     }
+
+    private void updateLayoutContent() {
+        questionField.setText(questionsArray[questionIndex]);
+
+        if (!nextButtonEnabled) {
+            resultText = getString(R.string.empty_text);
+        }
+
+        resultField.setText(resultText);
+
+        nextButton.setEnabled(nextButtonEnabled);
+        cheatButton.setEnabled(!nextButtonEnabled);
+        falseButton.setEnabled(!nextButtonEnabled);
+        trueButton.setEnabled(!nextButtonEnabled);
+    }
+
 
     private void checkQuizCompletion() {
 
