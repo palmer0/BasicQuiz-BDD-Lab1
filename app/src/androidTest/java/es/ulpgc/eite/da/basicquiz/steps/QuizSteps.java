@@ -1,6 +1,5 @@
 package es.ulpgc.eite.da.basicquiz.steps;
 
-import static android.content.pm.ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE;
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.Espresso.pressBack;
 import static androidx.test.espresso.action.ViewActions.click;
@@ -11,6 +10,7 @@ import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.not;
 
 import androidx.test.core.app.ActivityScenario;
+import androidx.test.platform.app.InstrumentationRegistry;
 
 import es.ulpgc.eite.da.basicquiz.QuestionActivity;
 import es.ulpgc.eite.da.basicquiz.R;
@@ -25,6 +25,10 @@ public class QuizSteps {
 
     ActivityScenario<QuestionActivity> scenario =
         ActivityScenario.launch(QuestionActivity.class);
+
+    /*@Rule
+    public ActivityScenarioRule<QuestionActivity> activityRule =
+        new ActivityScenarioRule<>(QuestionActivity.class);*/
 
     @Given("iniciar pantalla Question")
     public void iniciarPantallaQuestion() {
@@ -42,8 +46,7 @@ public class QuizSteps {
 
     @And("ocultar resultado")
     public void ocultarResultado() {
-        //onView(withId(R.id.resultField)).check(matches(withText("???")));
-        onView(withId(R.id.resultField)).check(matches(withText(R.string.empty_text)));
+        onView(withId(R.id.resultField)).check(matches(withText("???")));
     }
 
     @And("mostrar botones True y False y Cheat activados")
@@ -88,8 +91,6 @@ public class QuizSteps {
         onView(withId(R.id.nextButton)).check(matches(isEnabled()));
     }
 
-    /*
-
     @When("girar pantalla")
     public void girarPantalla() {
 
@@ -112,7 +113,27 @@ public class QuizSteps {
         } catch (InterruptedException e) {
         }
     }
-    */
+
+    /*@When("girar pantalla")
+    public void girarPantalla() {
+
+
+        scenario.onActivity(activity -> {
+            activity.setRequestedOrientation(SCREEN_ORIENTATION_LANDSCAPE);
+
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+            }
+
+            activity.setRequestedOrientation(SCREEN_ORIENTATION_PORTRAIT);
+
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+            }
+        });
+    }*/
 
     @And("pulsar boton Cheat")
     public void pulsarBotonCheat() {
@@ -135,8 +156,7 @@ public class QuizSteps {
 
     @And("ocultar respuesta")
     public void ocultarRespuesta() {
-        //onView(withId(R.id.answerField)).check(matches(withText("???")));
-        onView(withId(R.id.answerField)).check(matches(withText(R.string.empty_text)));
+        onView(withId(R.id.answerField)).check(matches(withText("???")));
     }
 
     @And("mostrar botones Yes y No activados")

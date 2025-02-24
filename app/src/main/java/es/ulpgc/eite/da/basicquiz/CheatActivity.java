@@ -15,6 +15,8 @@ public class CheatActivity extends AppCompatActivity {
 
   public final static String EXTRA_ANSWER = "EXTRA_ANSWER";
   public final static String EXTRA_CHEATED = "EXTRA_CHEATED";
+  public final static String KEY_ANSWER = "KEY_ANSWER";
+  public final static String KEY_CHEATED = "KEY_CHEATED";
 
   private Button noButton, yesButton;
   private TextView answerField;
@@ -27,22 +29,63 @@ public class CheatActivity extends AppCompatActivity {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_cheat);
     setTitle(R.string.cheat_screen_title);
-
     Log.d(TAG, "onCreate");
 
     linkLayoutComponents();
-    initLayoutData();
+    initLayoutData(); // ---
+
+    /*
+    if(savedInstanceState == null) {
+      initLayoutData();
+
+    } else {
+
+      currentAnswer = savedInstanceState.getInt(KEY_ANSWER);
+      answerCheated = savedInstanceState.getBoolean(KEY_CHEATED);
+
+      if(answerCheated) {
+        //updateLayoutContent();
+        onYesButtonClicked();
+      }
+    }
+    */
+
     initLayoutButtons();
   }
 
+  @Override
+  protected void onResume() {
+    super.onResume();
+    Log.d(TAG, "onResume");
+  }
+
+  @Override
+  protected void onPause() {
+    super.onPause();
+    Log.d(TAG, "onPause");
+  }
+
+  @Override
+  protected void onDestroy() {
+    super.onDestroy();
+    Log.d(TAG, "onDestroy");
+  }
+
+  @Override
+  protected void onSaveInstanceState(Bundle outState) {
+    super.onSaveInstanceState(outState);
+    Log.d(TAG, "onSaveInstanceState");
+
+    /*
+    outState.putInt(KEY_ANSWER, currentAnswer);
+    outState.putBoolean(KEY_CHEATED, answerCheated);
+    */
+  }
 
   private void initLayoutData() {
     Intent intent = getIntent();
 
-    // hay algun dato pasado desde pantalla Question
     if ( intent != null) {
-
-      // guardar respuesta correcta
       currentAnswer = intent.getExtras().getInt(EXTRA_ANSWER);
     }
   }
@@ -67,7 +110,6 @@ public class CheatActivity extends AppCompatActivity {
     //Log.d(TAG, "answerCheated: " + answerCheated);
 
     Intent intent = new Intent();
-    //Intent intent = new Intent(this, QuestionActivity.class);
     intent.putExtra(EXTRA_CHEATED, answerCheated);
     setResult(RESULT_OK, intent);
 
@@ -86,18 +128,16 @@ public class CheatActivity extends AppCompatActivity {
 
 
   private void onYesButtonClicked() {
-
-    //answerField.setText("" + currentAnswer);
-
+    Log.d(TAG, "onYesButtonClicked");
 
     yesButton.setEnabled(false);
     noButton.setEnabled(false);
     answerCheated = true;
     updateLayoutContent();
-
   }
 
   private void updateLayoutContent() {
+    Log.d(TAG, "updateLayoutContent");
 
     if(currentAnswer == 0) {
       answerField.setText(R.string.false_text);
@@ -108,24 +148,12 @@ public class CheatActivity extends AppCompatActivity {
   }
 
   private void onNoButtonClicked() {
+    Log.d(TAG, "onNoButtonClicked");
 
-    finish();
-
-    //yesButton.setEnabled(false);
-    //noButton.setEnabled(false);
-
-    /*
-    Intent intent = new Intent(this, QuestionActivity.class);
-    startActivity(intent);
-    */
-
-
-    /*
     yesButton.setEnabled(false);
     noButton.setEnabled(false);
 
     returnCheatedStatus();
-    */
   }
 
 
