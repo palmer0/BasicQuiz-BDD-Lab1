@@ -23,6 +23,7 @@ public class CheatActivity extends AppCompatActivity {
 
   private int currentAnswer;
   private boolean answerCheated;
+  //private boolean buttonsDisabled;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +36,22 @@ public class CheatActivity extends AppCompatActivity {
     initLayoutData(); // ---
 
     /*
+
+    if(savedInstanceState != null) {
+      currentAnswer = savedInstanceState.getInt("CURRENT_ANSWER");
+      answerCheated = savedInstanceState.getBoolean("VER_RESPUESTA");
+    }
+
+    if(answerCheated) {
+      yesButton.setEnabled(false);
+      noButton.setEnabled(false);
+      answerField.setText(currentAnswer == 0 // 0 o 1
+          ? R.string.false_text // "False"
+          : R.string.true_text // "True"
+      );
+    }
+    */
+
     if(savedInstanceState == null) {
       initLayoutData();
 
@@ -48,7 +65,7 @@ public class CheatActivity extends AppCompatActivity {
         onYesButtonClicked();
       }
     }
-    */
+
 
     initLayoutButtons();
   }
@@ -77,16 +94,21 @@ public class CheatActivity extends AppCompatActivity {
     Log.d(TAG, "onSaveInstanceState");
 
     /*
+    //outState.putBoolean("BTN_PRESSED", buttonsDisabled);
+    outState.putInt("CURRENT_ANSWER", currentAnswer); // 0 o 1
+    outState.putBoolean("VER_RESPUESTA", answerCheated);
+
+    */
+
     outState.putInt(KEY_ANSWER, currentAnswer);
     outState.putBoolean(KEY_CHEATED, answerCheated);
-    */
   }
 
   private void initLayoutData() {
     Intent intent = getIntent();
 
     if ( intent != null) {
-      currentAnswer = intent.getExtras().getInt(EXTRA_ANSWER);
+      currentAnswer = intent.getExtras().getInt(EXTRA_ANSWER); // 0 o 1
     }
   }
 
@@ -134,10 +156,13 @@ public class CheatActivity extends AppCompatActivity {
     noButton.setEnabled(false);
     answerCheated = true;
     updateLayoutContent();
+
+    //buttonsDisabled=true;
   }
 
   private void updateLayoutContent() {
     Log.d(TAG, "updateLayoutContent");
+
 
     if(currentAnswer == 0) {
       answerField.setText(R.string.false_text);
@@ -149,6 +174,8 @@ public class CheatActivity extends AppCompatActivity {
 
   private void onNoButtonClicked() {
     Log.d(TAG, "onNoButtonClicked");
+
+    //buttonsEnabled=false;
 
     yesButton.setEnabled(false);
     noButton.setEnabled(false);

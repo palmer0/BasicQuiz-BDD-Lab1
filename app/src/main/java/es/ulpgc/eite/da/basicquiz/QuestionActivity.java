@@ -25,7 +25,7 @@ public class QuestionActivity extends AppCompatActivity {
     private int questionIndex = 0;
     private int[] answersArray;
     private boolean nextButtonEnabled;
-    //private boolean trueButtonPressed;
+    private boolean trueButtonPressed=false;
 
     private String resultText;
 
@@ -40,6 +40,14 @@ public class QuestionActivity extends AppCompatActivity {
         linkLayoutComponents();
 
         /*
+        if (savedInstanceState == null) {
+            Log.d(TAG, "onCreate");
+        } else  {
+            Log.d(TAG, "onRecreate");
+        }
+        */
+
+        /*
         if (savedInstanceState != null) {
             questionIndex = savedInstanceState.getInt(KEY_INDEX);
             resultText = savedInstanceState.getString(KEY_RESULT);
@@ -47,6 +55,62 @@ public class QuestionActivity extends AppCompatActivity {
             nextButtonEnabled = savedInstanceState.getBoolean(KEY_ENABLED);
         }
         */
+
+        if (savedInstanceState != null) {
+            /*
+            // GUARDAR ESTADO
+            outState.putBoolean("NEXT_BTN_STATUS", nextButtonEnabled);
+            outState.putInt("INDEX_QUIZ", questionIndex);
+            // if trueButtonPressed==true => clic "True"
+            // if trueButtonPressed==false => clic "False"
+            // if trueButtonPressed==null => NO clic //  NO
+            // if nextButtonEnabled==false => NO clic //  SI
+            outState.putBoolean("TRUE_BTN_PRESSED", trueButtonPressed);
+            */
+
+            // RECUPERAR ESTADO
+            nextButtonEnabled=savedInstanceState.getBoolean("NEXT_BTN_STATUS");
+            questionIndex=savedInstanceState.getInt("INDEX_QUIZ");
+            trueButtonPressed=savedInstanceState.getBoolean("TRUE_BTN_PRESSED");
+
+
+            /*
+            // APLICAR ESTADO
+
+            nextButton.setEnabled(nextButtonEnabled);
+            cheatButton.setEnabled(!nextButtonEnabled);
+            trueButton.setEnabled(!nextButtonEnabled);
+            falseButton.setEnabled(!nextButtonEnabled);
+            */
+
+            // El usuario ha hecho clic  en TRUE
+            if(trueButtonPressed) {
+                if (answersArray[questionIndex] == 1) { // TRUE
+                    resultText = getString(R.string.correct_text);
+                } else {
+                    resultText = getString(R.string.incorrect_text);
+                }
+
+            // El usuario ha hecho clic  en FALSE o no ha hecho clic
+            } else {
+
+                // El usuario ha hecho clic  en FALSE
+                if(nextButtonEnabled) {
+                    if(answersArray[questionIndex] == 0) { // FALSE
+                        resultText = getString(R.string.correct_text);
+                    } else {
+                        resultText = getString(R.string.incorrect_text);
+                    }
+                // El usuario  no ha hecho clic
+                } else {
+                    resultText = getString(R.string.empty_text);
+                }
+
+            }
+        }
+
+        //String resultText = getString(R.string.empty_text);
+        //updateLayoutContent(resultText);
 
         updateLayoutContent();
         initLayoutButtons();
@@ -74,6 +138,14 @@ public class QuestionActivity extends AppCompatActivity {
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         Log.d(TAG, "onSaveInstanceState");
+
+        outState.putBoolean("NEXT_BTN_STATUS", nextButtonEnabled);
+        outState.putInt("INDEX_QUIZ", questionIndex);
+        // if trueButtonPressed==true => clic "True"
+        // if trueButtonPressed==false => clic "False"
+        // if trueButtonPressed==null => NO clic //  NO
+        // if nextButtonEnabled==false => NO clic //  SI
+        outState.putBoolean("TRUE_BTN_PRESSED", trueButtonPressed);
 
         /*
         outState.putInt(KEY_INDEX, questionIndex);
@@ -165,6 +237,25 @@ public class QuestionActivity extends AppCompatActivity {
     }
     */
 
+//    private void updateLayoutContent(String text) {
+//        Log.d(TAG, "updateLayoutContent");
+//
+//        String resultText = text;
+//
+//        questionField.setText(questionsArray[questionIndex]);
+//        if (!nextButtonEnabled) {
+//            resultText = getString(R.string.empty_text);
+//        }
+//
+//        resultField.setText(resultText);
+//
+//        nextButton.setEnabled(nextButtonEnabled);
+//        cheatButton.setEnabled(!nextButtonEnabled);
+//        falseButton.setEnabled(!nextButtonEnabled);
+//        trueButton.setEnabled(!nextButtonEnabled);
+//    }
+
+
     private void updateLayoutContent() {
         Log.d(TAG, "updateLayoutContent");
 
@@ -185,6 +276,10 @@ public class QuestionActivity extends AppCompatActivity {
     private void onTrueButtonClicked() {
         Log.d(TAG, "onTrueButtonClicked");
 
+        //String resultText = getString(R.string.empty_text);
+
+        trueButtonPressed = true;
+
         if (answersArray[questionIndex] == 1) {
             resultText =  getString(R.string.correct_text);
         } else {
@@ -192,11 +287,16 @@ public class QuestionActivity extends AppCompatActivity {
         }
 
         nextButtonEnabled = true;
+        //updateLayoutContent(resultText);
         updateLayoutContent();
     }
 
     private void onFalseButtonClicked() {
         Log.d(TAG, "onFalseButtonClicked");
+
+        //String resultText = getString(R.string.empty_text);
+
+        trueButtonPressed = false;
 
         if (answersArray[questionIndex] == 0) {
             resultText = getString(R.string.correct_text);
@@ -206,6 +306,7 @@ public class QuestionActivity extends AppCompatActivity {
 
         nextButtonEnabled = true;
         updateLayoutContent();
+        //updateLayoutContent(resultText);
     }
 
     @SuppressWarnings("ALL")
@@ -242,14 +343,20 @@ public class QuestionActivity extends AppCompatActivity {
     private void onNextButtonClicked() {
         Log.d(TAG, "onNextButtonClicked");
 
+        //trueButtonPressed=null;
+
         nextButtonEnabled = false;
         questionIndex++;
+
+        //String resultText = getString(R.string.empty_text);
 
         checkQuizCompletion();
 
         if (questionIndex < questionsArray.length) {
             //trueButtonPressed = false;
+
             updateLayoutContent();
+            //updateLayoutContent(resultText);
         }
 
     }
